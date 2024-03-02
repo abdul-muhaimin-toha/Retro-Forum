@@ -84,32 +84,52 @@
           >
             <div class="hero-overlay bg-opacity-0"></div>
             <div
-              class="flex justify-between items-start md:items-center w-full flex-col md:flex-row gap-8 md:gap-0"
+              class="flex justify-between items-start md:items-center w-full flex-col md:flex-row gap-2 md:gap-5"
             >
-              <div class="hero-content text-left text-neutral-content p-0">
-                <div class="max-w-full md:max-w-xl">
+              <div
+                class="hero-content text-left text-neutral-content p-0 w-full"
+              >
+                <div class="w-full">
                   <h1
-                    class="mb-5 text-4xl max-w-full lg:text-6xl font-black text-white md:text-5xl md:max-w-lg"
+                    class="mb-5 font-black text-white text-4xl md:text-6xl text-center md:text-left md:max-w-lg"
                   >
                     Welcome to the
                     <span class="text-[#797DFC]">ReTro</span>
                     Forum
                   </h1>
-                  <p class="mb-8 max-w-xs text-gray-200 text-xl">
+                  <p
+                    class="mb-8 md:max-w-xs text-gray-200 text-xl text-center md:text-left"
+                  >
                     Share your favorite opinion and win and wp forum coffee mug!
                   </p>
+                  <!-- Large Screen Search Bar -->
                   <div
-                    class="md:bg-white p-1 flex flex-col md:flex-row max-w-xs md:max-w-sm md:gap-2 rounded-3xl gap-4"
+                    class="bg-white p-1 md:flex flex-row max-w-md gap-2 rounded-3xl hidden"
                   >
                     <input
                       type="text"
-                      class="py-3 px-3 md:px-4 text-black text-base grow focus:outline-none rounded-3xl"
+                      class="py-3 px-4 text-black text-base grow focus:outline-none rounded-3xl"
                       placeholder="Search here anything"
                     />
                     <button
                       class="text-lg font-semibold bg-[#797DFC] text-white px-6 md:px-8 py-2.5 rounded-3xl hover:bg-[#373a81] duration-200 ease-in"
                     >
                       Search
+                    </button>
+                  </div>
+                  <!-- Mobile Search bar -->
+                  <div
+                    class="flex flex-col justify-between gap-3 mt-12 md:hidden mb-4"
+                  >
+                    <input
+                      type="text"
+                      placeholder="Search here anything"
+                      class="border rounded-3xl outline-black py-3 px-4 text-black text-base"
+                    />
+                    <button
+                      class="text-lg font-semibold bg-[#797DFC] text-white px-8 py-2.5 rounded-3xl hover:bg-[#373a81] duration-200 ease-in"
+                    >
+                      Search Now
                     </button>
                   </div>
                 </div>
@@ -180,7 +200,7 @@
                       class="w-16 rounded-sm"
                     />
                     <div
-                      class="bg-red-900 rounded-full w-4 h-4 -top-1 -right-1 absolute"
+                      class="bg-red-600 rounded-full w-5 h-5 -top-2 -right-2 absolute"
                     ></div>
                   </div>
                   <div class="grow flex flex-col gap-2">
@@ -242,7 +262,7 @@
                       class="w-16 rounded-sm"
                     />
                     <div
-                      class="bg-red-900 rounded-full w-4 h-4 -top-1 -right-1 absolute"
+                      class="bg-red-600 rounded-full w-5 h-5 -top-2 -right-2 absolute"
                     ></div>
                   </div>
                   <div class="grow flex flex-col gap-2">
@@ -304,7 +324,7 @@
                       class="w-16 rounded-sm"
                     />
                     <div
-                      class="bg-red-900 rounded-full w-4 h-4 -top-1 -right-1 absolute"
+                      class="bg-red-600 rounded-full w-5 h-5 -top-2 -right-2 absolute"
                     ></div>
                   </div>
                   <div class="grow flex flex-col gap-2">
