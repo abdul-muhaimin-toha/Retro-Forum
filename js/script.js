@@ -193,7 +193,7 @@ function displayLatestPost(posts) {
                               <img
                                 src="${post.profile_image || 'media/user.jpg'}"
                                 alt="User"
-                                class="w-12 h-12 object-cover rounded-full"
+                                class="w-12 h-12 object-cover rounded-full outline-white outline-double outline-offset-2 "
                               />
                               <div class="flex flex-col gap-0.5">
                                 <h5 class="font-bold text-lg">${
