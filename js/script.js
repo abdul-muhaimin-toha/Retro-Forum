@@ -1,41 +1,85 @@
 // Selecting Elements
 const postsContainerElement = document.getElementById('posts-container');
+const LatestPostsContainerElement = document.getElementById(
+  'latest-post-container'
+);
 const markedCardsContainerElement = document.getElementById(
   'marked-cards-container'
 );
 const readCountElement = document.getElementById('read-count');
 const articleAddMessageElement = document.getElementById('add-article-text');
+const searchButtonElements = document.querySelectorAll('.search-button');
 
 // Initial Values
 let readCount = 0;
 
 // Creating Spinner
 const spinner = document.createElement('div');
-spinner.classList = `flex flex-col justify-center items-center gap-2 col-span-full mt-1`;
+spinner.classList = `flex flex-col justify-center items-center gap-2 col-span-full mt-3 `;
 spinner.innerHTML = ` 
                       <span class="loading loading-spinner text-[#373a81] loading-lg"></span>
                       <p class="text-lg font-bold">Loading, please wait!</p>
                     `;
 
+// Creating Spinner 2
+const spinner2 = document.createElement('div');
+spinner2.classList = `flex flex-col justify-center items-center gap-2 col-span-full mt-3 `;
+spinner2.innerHTML = ` 
+                      <span class="loading loading-spinner text-[#373a81] loading-lg"></span>
+                      <p class="text-lg font-bold">Loading, please wait!</p>
+                    `;
+
+// Sorry Text
+const sorryDiv = document.createElement('div');
+sorryDiv.classList = `flex justify-center items-center p-12 flex-col gap-1 text-center`;
+sorryDiv.innerHTML = `<p class="font-bold text-lg">Sorry Nothing found.</p>
+                      <p>Try something else</p>
+                      <button id="reset-post" class="mt-3 font-normal bg-[#797DFC] text-white px-4 md:px-6 py-2.5 rounded-2xl hover:bg-[#373a81] duration-200 ease-in">
+                      Show All</button>`;
+
 // Initial All Post Fetch and Displaying
 fetchAllPostData();
 
+// Initial All Post Fetch and Displaying
+fetchLatestPostData();
+
 // All Post Async Function
-async function fetchAllPostData() {
+async function fetchAllPostData(
+  link = 'https://openapi.programming-hero.com/api/retro-forum/posts'
+) {
   postsContainerElement.innerHTML = '';
   postsContainerElement.appendChild(spinner);
 
-  const response = await fetch(
-    `https://openapi.programming-hero.com/api/retro-forum/posts`
-  );
+  const response = await fetch(link);
   const { posts } = await response.json();
 
   setTimeout(() => displayAllPost(posts), 2000);
 }
 
+// Latest Post Async Function
+async function fetchLatestPostData() {
+  LatestPostsContainerElement.innerHTML = '';
+  LatestPostsContainerElement.appendChild(spinner2);
+
+  const response = await fetch(
+    `https://openapi.programming-hero.com/api/retro-forum/latest-posts`
+  );
+  const posts = await response.json();
+
+  setTimeout(() => displayLatestPost(posts), 2000);
+}
+
 // Displaying All Posts
 function displayAllPost(posts) {
   postsContainerElement.innerHTML = '';
+  if (!posts.length) {
+    postsContainerElement.appendChild(sorryDiv);
+    document
+      .getElementById('reset-post')
+      .addEventListener('click', function () {
+        fetchAllPostData();
+      });
+  }
   posts.forEach((post) => {
     const postBlock = document.createElement('div');
     postBlock.classList = `bg-gray-200 rounded-2xl p-6 md:p-8`;
@@ -112,3 +156,65 @@ function displayAllPost(posts) {
     });
   });
 }
+
+// Display Latest Posts
+function displayLatestPost(posts) {
+  LatestPostsContainerElement.innerHTML = ``;
+  posts.forEach((post) => {
+    const postBlock = document.createElement('div');
+    postBlock.classList = `bg-gray-200 rounded-2xl p-6 flex flex-col gap-6`;
+    postBlock.innerHTML = `
+                            <div class="w-full h-56 md:h-48 overflow-hidden rounded-lg">
+                              <img
+                                src="${
+                                  post.cover_image || 'media/blank-photo.jpg'
+                                }"
+                                alt="Card Image"
+                                class="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                              <div class="flex flex-row items-center gap-3">
+                                <img src="media/icons/calender.svg" alt="Calender Icon" />
+                                <p>${
+                                  post.author?.posted_date || 'No publish date'
+                                }</p>
+                              </div>
+                              <h3 class="font-bold text-lg">
+                                ${post.title}
+                              </h3>
+                              <p class="text-gray-700 min-h-20">
+                                ${post.description}
+                              </p>
+                            </div>
+                            <div
+                              class="flex flex-col md:flex-row gap-2 md:gap-4 items-start md:items-center"
+                            >
+                              <img
+                                src="${post.profile_image || 'media/user.jpg'}"
+                                alt="User"
+                                class="w-12 h-12 object-cover rounded-full"
+                              />
+                              <div class="flex flex-col gap-0.5">
+                                <h5 class="font-bold text-lg">${
+                                  post.author?.name || 'Unknown Author'
+                                }</h5>
+                                <h6 class="font-normal text-base">${
+                                  post.author?.designation || 'Unknown'
+                                }</h6>
+                              </div>
+                            </div>
+                          `;
+    LatestPostsContainerElement.appendChild(postBlock);
+  });
+}
+
+// Search Funtionality
+searchButtonElements.forEach((button) => {
+  button.addEventListener('click', function (event) {
+    const input = event.target.parentNode.querySelector('input');
+    const searchFetchlink = `https://openapi.programming-hero.com/api/retro-forum/posts?category=${input.value.toLowerCase()}`;
+    fetchAllPostData(searchFetchlink);
+    input.value = '';
+  });
+});
