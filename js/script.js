@@ -9,6 +9,7 @@ const markedCardsContainerElement = document.getElementById(
 const readCountElement = document.getElementById('read-count');
 const articleAddMessageElement = document.getElementById('add-article-text');
 const searchButtonElements = document.querySelectorAll('.search-button');
+const largeInputElement = document.querySelector('.search-input');
 
 // Initial Values
 let readCount = 0;
@@ -32,10 +33,12 @@ spinner2.innerHTML = `
 // Sorry Text
 const sorryDiv = document.createElement('div');
 sorryDiv.classList = `flex justify-center items-center p-12 flex-col gap-1 text-center`;
-sorryDiv.innerHTML = `<p class="font-bold text-lg">Sorry Nothing found.</p>
+sorryDiv.innerHTML = `
+                      <p class="font-bold text-lg">Sorry Nothing found.</p>
                       <p>Try something else</p>
                       <button id="reset-post" class="mt-3 font-normal bg-[#797DFC] text-white px-4 md:px-6 py-2.5 rounded-2xl hover:bg-[#373a81] duration-200 ease-in">
-                      Show All</button>`;
+                      Show All</button>
+                    `;
 
 // Initial All Post Fetch and Displaying
 fetchAllPostData();
@@ -48,7 +51,7 @@ async function fetchAllPostData(
   link = 'https://openapi.programming-hero.com/api/retro-forum/posts'
 ) {
   postsContainerElement.innerHTML = '';
-  postsContainerElement.appendChild(spinner);
+  postsContainerElement.appendChild(spinner2);
 
   const response = await fetch(link);
   const { posts } = await response.json();
@@ -59,7 +62,7 @@ async function fetchAllPostData(
 // Latest Post Async Function
 async function fetchLatestPostData() {
   LatestPostsContainerElement.innerHTML = '';
-  LatestPostsContainerElement.appendChild(spinner2);
+  LatestPostsContainerElement.appendChild(spinner);
 
   const response = await fetch(
     `https://openapi.programming-hero.com/api/retro-forum/latest-posts`
@@ -90,7 +93,7 @@ function displayAllPost(posts) {
                                   post.image || '../media/user.jpg'
                                 }" alt="User" class="w-16 rounded-lg" />
                                 <div class="${
-                                  post.isActive ? 'bg-red-600' : 'bg-green-500'
+                                  post.isActive ? 'bg-green-500' : 'bg-red-600'
                                 } rounded-full w-5 h-5 -top-2 -right-2 absolute border-spacing-4 border-white border-2"></div>
                               </div>
                               <div class="grow flex flex-col gap-2">
@@ -115,7 +118,7 @@ function displayAllPost(posts) {
                                       <p>${post.posted_time} min</p>
                                     </div>
                                   </div>
-                                  <button class="marked-read-btn flex flex-row self-end md:self-auto">
+                                  <button class="marked-read-btn flex flex-row self-end md:self-auto outline outline-2 outline-white outline-offset-2 rounded-full hover:outline-green-500 duration-200 ease-out">
                                     <img
                                       src="media/icons/email.svg"
                                       alt="Email Icon"
@@ -217,4 +220,14 @@ searchButtonElements.forEach((button) => {
     fetchAllPostData(searchFetchlink);
     input.value = '';
   });
+});
+
+// Large Screen Input Button work on Enter key press
+document.addEventListener('keyup', function (event) {
+  if (event.key === 'Enter' && largeInputElement.value) {
+    const inputValue = largeInputElement.value;
+    const searchFetchlink = `https://openapi.programming-hero.com/api/retro-forum/posts?category=${inputValue.toLowerCase()}`;
+    fetchAllPostData(searchFetchlink);
+    largeInputElement.value = '';
+  }
 });
