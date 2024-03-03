@@ -1,7 +1,13 @@
 // Selecting Elements
 const postsContainerElement = document.getElementById('posts-container');
+const markedCardsContainerElement = document.getElementById(
+  'marked-cards-container'
+);
+const readCountElement = document.getElementById('read-count');
+const articleAddMessageElement = document.getElementById('add-article-text');
 
 // Initial Values
+let readCount = 0;
 
 // Creating Spinner
 const spinner = document.createElement('div');
@@ -31,14 +37,13 @@ async function fetchAllPostData() {
 function displayAllPost(posts) {
   postsContainerElement.innerHTML = '';
   posts.forEach((post) => {
-    console.log(post);
     const postBlock = document.createElement('div');
     postBlock.classList = `bg-gray-200 rounded-2xl p-6 md:p-8`;
     postBlock.innerHTML = `
                             <div class="flex flex-col md:flex-row lg:flex-col xl:flex-row gap-7">
                               <div class="relative w-16">
                                 <img src="${
-                                  post.image || '../media/user.webp'
+                                  post.image || '../media/user.jpg'
                                 }" alt="User" class="w-16 rounded-sm" />
                                 <div class="${
                                   post.isActive ? 'bg-red-600' : 'bg-green-500'
@@ -59,14 +64,14 @@ function displayAllPost(posts) {
                                     </div>
                                     <div class="flex flex-row gap-2 items-center">
                                       <img src="media/icons/eye.svg" alt="Eye Icon" />
-                                      <p>${post.view_count}</p>
+                                      <p id="view">${post.view_count}</p>
                                     </div>
                                     <div class="flex flex-row gap-2 items-center">
                                       <img src="media/icons/clock.svg" alt="Clock Icon" />
                                       <p>${post.posted_time} min</p>
                                     </div>
                                   </div>
-                                  <button class="flex flex-row self-end md:self-auto">
+                                  <button class="marked-read-btn flex flex-row self-end md:self-auto">
                                     <img
                                       src="media/icons/email.svg"
                                       alt="Email Icon"
@@ -78,5 +83,32 @@ function displayAllPost(posts) {
                             </div>
                           `;
     postsContainerElement.appendChild(postBlock);
+  });
+
+  // Marked Button Functionality
+  const readMarkedBtnElements = document.querySelectorAll('.marked-read-btn');
+  readMarkedBtnElements.forEach((btn) => {
+    btn.addEventListener('click', function (event) {
+      articleAddMessageElement.classList = 'hidden';
+      readCount++;
+      const topParent = event.target.parentNode.parentNode.parentNode;
+      const title = topParent.querySelector('h3').innerText;
+      const viewCount = topParent.querySelector('#view').innerText;
+
+      // Creating Read Marked Element
+      const readElement = document.createElement('div');
+      readElement.classList = `p-4 bg-white flex flex-col md:flex-row justify-between items-center gap-3 rounded-lg`;
+      readElement.innerHTML = `
+                                <h3 class="md:w-4/6 font-bold w-full text-lg md:text-base">
+                                  ${title}
+                                </h3>
+                                <div class="flex justify-start md:justify-end items-center w-full md:w-2/6 gap-2">
+                                  <img src="media/icons/eye.svg" alt="Eye Icon" />
+                                  <p>${viewCount}</p>
+                                </div>
+                              `;
+      markedCardsContainerElement.appendChild(readElement);
+      readCountElement.innerText = readCount;
+    });
   });
 }

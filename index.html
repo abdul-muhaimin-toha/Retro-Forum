@@ -200,58 +200,26 @@
                 <h4 class="text-xl font-bold text-black">Title</h4>
                 <div class="flex justify-center items-center gap-4">
                   <img src="media/icons/tick.svg" alt="Tick Icon" />
-                  <p class="font-normal text-gray-800">Mark as read (4)</p>
+                  <p class="font-normal text-gray-800">
+                    Mark as read (<span id="read-count">0</span>)
+                  </p>
                 </div>
               </div>
-              <!-- Loader -->
-              <div
-                class="flex flex-col justify-center items-center gap-2 col-span-full mt-1"
-              >
-                <span
-                  class="loading loading-spinner text-[#373a81] loading-lg"
-                ></span>
-                <p class="text-lg font-bold">Loading, please wait!</p>
-              </div>
-              <!-- Card -->
-              <div
-                class="p-4 bg-white flex flex-col md:flex-row justify-between items-center gap-3 rounded-lg"
-              >
-                <h3 class="md:w-4/6 font-bold w-full text-lg md:text-base">
-                  10 Kids Unaware of Their Halloween Costume
-                </h3>
+              <!-- Cards Container -->
+              <div id="marked-cards-container" class="flex gap-4 flex-col">
+                <!-- Add article Div -->
                 <div
-                  class="flex justify-start md:justify-end items-center w-full md:w-2/6 gap-2"
+                  id="add-article-text"
+                  class="flex justify-center items-center py-6"
                 >
-                  <img src="media/icons/eye.svg" alt="Eye Icon" />
-                  <p>1568</p>
-                </div>
-              </div>
-              <!-- Card -->
-              <div
-                class="p-4 bg-white flex flex-col md:flex-row justify-between items-center gap-3 rounded-lg"
-              >
-                <h3 class="md:w-4/6 font-bold w-full text-lg md:text-base">
-                  10 Kids Unaware of Their Halloween Costume
-                </h3>
-                <div
-                  class="flex justify-start md:justify-end items-center w-full md:w-2/6 gap-2"
-                >
-                  <img src="media/icons/eye.svg" alt="Eye Icon" />
-                  <p>1568</p>
-                </div>
-              </div>
-              <!-- Card -->
-              <div
-                class="p-4 bg-white flex flex-col md:flex-row justify-between items-center gap-3 rounded-lg"
-              >
-                <h3 class="md:w-4/6 font-bold w-full text-lg md:text-base">
-                  10 Kids Unaware of Their Halloween Costume
-                </h3>
-                <div
-                  class="flex justify-start md:justify-end items-center w-full md:w-2/6 gap-2"
-                >
-                  <img src="media/icons/eye.svg" alt="Eye Icon" />
-                  <p>1568</p>
+                  <p class="text-lg text-center flex gap-4">
+                    Add Article by pressing
+                    <img
+                      src="media/icons/email.svg"
+                      alt="Open Icon"
+                      class="inline"
+                    />
+                  </p>
                 </div>
               </div>
             </div>
