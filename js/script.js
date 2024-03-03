@@ -88,10 +88,10 @@ function displayAllPost(posts) {
                               <div class="relative w-16">
                                 <img src="${
                                   post.image || '../media/user.jpg'
-                                }" alt="User" class="w-16 rounded-sm" />
+                                }" alt="User" class="w-16 rounded-lg" />
                                 <div class="${
                                   post.isActive ? 'bg-red-600' : 'bg-green-500'
-                                } rounded-full w-5 h-5 -top-2 -right-2 absolute"></div>
+                                } rounded-full w-5 h-5 -top-2 -right-2 absolute border-spacing-4 border-white border-2"></div>
                               </div>
                               <div class="grow flex flex-col gap-2">
                                 <div class="flex flex-col md:flex-row gap-2 md:gap-6 text-gray-700 mb-3">
